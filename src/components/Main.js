@@ -19,7 +19,9 @@ class Main extends Component {
 
   render(){
     return(
-      <RecipeForm createRecipe={this.createRecipe} />
+      <div className='container-fluid'>
+        <RecipeForm createRecipe={this.createRecipe} />
+      </div>
     )
   }
 }

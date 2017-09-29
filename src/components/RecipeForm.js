@@ -6,7 +6,8 @@ class RecipeForm extends Component {
 
     this.state = {
       title: '',
-      feeds: null,
+      feeds: '',
+      ingredient: '',
       ingredients: []
     }
   }
@@ -23,6 +24,20 @@ class RecipeForm extends Component {
     console.log('Feeds: ', this.state.feeds);
   }
 
+  handleIngredient = (e) => {
+    e.preventDefault();
+    this.setState({ingredient: e.target.value})
+    console.log('Ingredient: ', this.state.ingredient);
+  }
+
+  handleAddIngredient = (e) => {
+    e.preventDefault();
+    let ingredientsArray = this.state.ingredients;
+    ingredientsArray.push({ingredient: this.state.ingredient});
+    this.setState({ingredients: ingredientsArray, ingredient: ''});
+    console.log(this.state.ingredients);
+  }
+
   handleCreateRecipe = (e) => {
     e.preventDefault();
 
@@ -31,17 +46,26 @@ class RecipeForm extends Component {
   }
 
   render(){
+    let ingredientsToAdd = this.state.ingredients.map((item, index) => {
+      return(
+        <p className='ingredient-to-add col-md-12'>{item.ingredient}</p>
+      )
+    })
     return (
-      <div class='recipe-form'>
-        <form onSubmit={this.handleCreateRecipe}>
-          <label htmlFor='recipe-title'>Recipe Name:</label>
-          <input onChange={this.handleAddTitle} type="text" id='recipe-title' />
-          <label htmlFor='feeds'>Feeds:</label>
-          <input onChange={this.handleAddFeeds} type="number" id='feeds' min="1" max="16" />
-          <label htmlFor='add-item'>Add Ingredient:</label>
-          <input type='text' id='add-item'/>
-          <input type="submit" value="Submit" />
+      <div className='recipe-form row'>
+        <form onSubmit={this.handleCreateRecipe} className='col-md-8 col-md-offset-2'>
+          <label htmlFor='recipe-title' className='col-md-2'>Recipe Name:</label>
+          <input onChange={this.handleAddTitle} className='col-md-8' type="text" id='recipe-title' value={this.state.title}/>
+          <label htmlFor='feeds' className='col-md-1'>Feeds:</label>
+          <input onChange={this.handleAddFeeds} className='col-md-1' type="number" id='feeds' min="1" max="16" value={this.state.feeds} />
+          <label htmlFor='add-item' className='col-md-2'>Add Ingredient:</label>
+          <input onChange={this.handleIngredient} className='col-md-10' type='text' id='add-item' value={this.state.ingredient}/>
+          <button onClick={this.handleAddIngredient} className='col-md-4 btn btn-primary'>Add Ingredient</button>
+          <input type="submit" value="Submit" className='col-md-4 col-md-offset-4 btn btn-primary' />
         </form>
+        <div className='ingredients-to-add-container row'>
+        {ingredientsToAdd}
+        </div>
       </div>
     )
   }

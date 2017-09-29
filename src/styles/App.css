@@ -4,3 +4,12 @@
   background-color: lightgrey;
   height: 250px;
 }
+
+.ingredients-to-add-container {
+  width: 50%;
+}
+
+.ingredient-to-add {
+  border: 1px solid black;
+  padding: 20px;
+}
