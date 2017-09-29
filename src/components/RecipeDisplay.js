@@ -3,23 +3,41 @@ import React, {Component} from 'react';
 class RecipeDisplay extends Component {
   render(){
     let recipeArray = this.props.recipeList;
-    let recipeRender = recipeArray.map((item, index) => {
-      return(
-        <div key={index}>
-          <h2>Title: {item.title}</h2>
-          <h3>Feeds: {item.feeds}</h3>
-          <p>{item.ingredients[0].ingredient}</p>
-          <p>{item.ingredients[1].ingredient}</p>
-        </div>
-      )
-    });
+    let recipeList = recipeArray.map((item, index) => {
+      return <RecipeListItem key={index} recipe={item} />
+    })
 
     return (
       <div>
-        {recipeRender}
+        {recipeList}
       </div>
     )
   }
 }
+
+function RecipeListItem(props){
+  let recipe = props.recipe;
+  let ingredientComponents = recipe.ingredients.map(function(ingredient, index){
+      return <Ingredients key={index} ingredient={ingredient} />
+  });
+
+  return (
+    <div>
+      <h1>Title: {recipe.title}</h1>
+      <h2>Feeds: {recipe.feeds}</h2>
+      <ul>
+        {ingredientComponents}
+      </ul>
+    </div>
+  )
+}
+
+function Ingredients(props){
+  let ingredient = props.ingredient;
+  return (
+    <li>{ingredient.ingredientAmount} {ingredient.ingredientMeasure} {ingredient.ingredient}</li>
+  )
+}
+
 
 export default RecipeDisplay;

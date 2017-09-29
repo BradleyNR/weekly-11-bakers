@@ -9,7 +9,7 @@ class Main extends Component {
 
     this.state = {
       recipeList: [
-        {title: 'test', feeds: 3, ingredients: [{ingredient: 'beef'}, {ingredient: 'chicken'}]}
+        {title: 'testing', feeds: 3, ingredients: [{ingredient: 'beef'}, {ingredient: 'chicken'}]}
       ]
     }
   }
