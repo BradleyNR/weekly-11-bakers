@@ -40,15 +40,22 @@ class RecipeForm extends Component {
 
   handleCreateRecipe = (e) => {
     e.preventDefault();
-
+    //define recipe
+    let recipeInfo = {
+      title: this.state.title,
+      feeds: this.state.feeds,
+      ingredients: this.state.ingredients
+    }
     //pass in function from main as props and pass up the state and do the work on the main
-    this.props.createRecipe('blah');
+    this.props.createRecipe(recipeInfo);
+
+    this.setState({title: '', feeds: '', ingredient: '', ingredients: []});
   }
 
   render(){
     let ingredientsToAdd = this.state.ingredients.map((item, index) => {
       return(
-        <p className='ingredient-to-add col-md-12'>{item.ingredient}</p>
+        <p className='ingredient-to-add col-md-8 col-md-offset-2'>{item.ingredient}</p>
       )
     })
     return (
