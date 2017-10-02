@@ -14,5 +14,17 @@
 
 .recipe-card {
   border: 1px solid black;
-  padding: 50px;
+  padding: 30px;
+}
+
+.recipe-info-box {
+  background-color: lightgrey;
+  border-radius: 10px;
+  padding: 30px;
+}
+
+.recipe-change-box {
+  background-color: grey;
+  border-radius: 10px;
+  padding: 30px;
 }

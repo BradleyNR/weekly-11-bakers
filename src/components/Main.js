@@ -10,7 +10,9 @@ class Main extends Component {
     super(props);
 
     this.state = {
-      recipeList: []
+      recipeList: [
+        {title: '', feeds: '', ingredients: []}
+      ]
     }
   }
 
@@ -43,12 +45,42 @@ class Main extends Component {
       });
   }
 
+  handleUpdate = (uniqueId, e) => {
+    e.preventDefault();
+
+    let postList = this.state.post;
+    // function to use in the .find below to find the correct post based on
+    // example in MDN docs
+    function findById(post){
+      return post._id === uniqueId
+    }
+    // post to edit
+    let thisPost = postList.find(findById);
+    console.log(thisPost);
+
+    return this.setState({modalOpen: true, imgURL: thisPost.imgURL, caption: thisPost.caption, idToEdit: thisPost._id});
+
+    // fetch('https://tiny-lasagna-server.herokuapp.com/collections/imageBoardBrad2/' + uniqueId, {
+    //   method: 'put',
+    //   body: JSON.stringify(data),
+    //   headers: {
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json'
+    //   }
+    // })
+
+  }
+
+  updateMainState = (state) => {
+    this.setState({recipeList: state})
+  }
+
   render(){
     return(
       <div className='container-fluid'>
         <RecipeForm createRecipe={this.createRecipe} />
         <div className=''>
-          <RecipeDisplay recipeList={this.state.recipeList} />
+          <RecipeDisplay recipeList={this.state.recipeList} updateMainState={this.updateMainState} />
         </div>
       </div>
     )
