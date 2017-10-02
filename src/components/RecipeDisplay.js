@@ -22,12 +22,14 @@ function RecipeListItem(props){
   });
 
   return (
-    <div>
-      <h1>Title: {recipe.title}</h1>
-      <h2>Feeds: {recipe.feeds}</h2>
-      <ul>
-        {ingredientComponents}
-      </ul>
+    <div className='col-md-8 col-md-offset-2 recipe-card'>
+      <section>
+        <h1>{recipe.title}</h1>
+        <h4>Feeds: {recipe.feeds}</h4>
+        <ul>
+          {ingredientComponents}
+        </ul>
+      </section>
     </div>
   )
 }
