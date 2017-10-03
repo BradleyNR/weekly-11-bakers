@@ -17,6 +17,7 @@ class RecipeForm extends Component {
     }
   }
 
+
   handleAddTitle = (e) => {
     e.preventDefault();
     this.setState({title: e.target.value});
@@ -107,10 +108,12 @@ class RecipeForm extends Component {
         </div>
       )
     })
+
     return (
       <div>
         <div className='recipe-header-area row'>
           <h1>CalcuBaker</h1>
+          {this.props.user ? <h4>Logged in as: {this.props.user.username}</h4> : null}
           <button onClick={this.handleAddModal} className='btn btn-primary col-md-4 col-md-offset-4'>Add Recipe</button>
         </div>
 

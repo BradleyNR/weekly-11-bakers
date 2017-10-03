@@ -9,17 +9,30 @@ class Main extends Component {
   constructor(props){
     super(props);
 
+    let user = localStorage.getItem('user');
+    let userJSON = JSON.parse(user);
+
     this.state = {
       recipeList: [
         {title: '', feeds: '', ingredients: []},
-      ]
+      ],
+      user: userJSON
     }
   }
 
   // get data from database and set state
   // data is passed down to RecipeDisplay for display purpose
   componentDidMount(){
-    fetch(PARSE_URL + '/classes/recipe/', {
+    let username = this.state.user.username;
+    // Building pointer per user to pull specific posts on logged in user
+    let pointer = {
+      "__type":"Pointer",
+      "className":"_User",
+      "objectId": this.state.user.objectId
+    };
+
+    // fetching user's posts
+    fetch(PARSE_URL + '/classes/recipe/?where={"user":' + JSON.stringify(pointer) + '}', {
       headers: HEADERS
     }).then((response) => {
       return response.json();
@@ -31,10 +44,20 @@ class Main extends Component {
 
   // send to database
   createRecipe = (recipeData) => {
+    let objId = this.state.user.objectId;
+
     fetch(PARSE_URL + '/classes/recipe', {
         headers: HEADERS,
-        body: JSON.stringify({title: recipeData.title, feeds: parseInt(recipeData.feeds), ingredients: recipeData.ingredients}),
-        method: 'POST'
+        body: JSON.stringify({
+          title: recipeData.title,
+          feeds: parseInt(recipeData.feeds),
+          ingredients: recipeData.ingredients,
+          user: {
+              "__type": "Pointer",
+              "className": "_User",
+              "objectId": objId
+          }}),
+          method: 'POST'
       }).then((resp) => {
         return resp.json();
       }).then((message) => {
@@ -52,7 +75,7 @@ class Main extends Component {
   render(){
     return(
       <div className='container-fluid'>
-        <RecipeForm createRecipe={this.createRecipe} />
+        <RecipeForm createRecipe={this.createRecipe} user={this.state.user} />
         <div className=''>
           <RecipeDisplay recipeList={this.state.recipeList} updateMainState={this.updateMainState} />
         </div>

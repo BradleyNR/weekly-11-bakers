@@ -161,23 +161,3 @@ function IngredientInputs(props){
 
 
 export default RecipeDisplay;
-
-
-
-
-// class RecipeChangeForm extends Component {
-//
-//   handleUpdatedFeeds = (e) => {
-//     e.preventDefault();
-//     this.setState({updatedFeeds: e.target.value});
-//   }
-//
-//   render(){
-//     return(
-//       <form>
-//         <input onChange={this.updateFeeds} className='col-md-6' type="text" value='1'/>
-//         <input type="submit" value="Submit" className='col-md-6 btn btn-primary' />
-//       </form>
-//     )
-//   }
-// }
