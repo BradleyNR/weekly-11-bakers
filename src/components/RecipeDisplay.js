@@ -93,7 +93,7 @@ class RecipeListItem extends Component {
           <button onClick={this.handleDelete} className='col-md-12 btn btn-danger'>Delete</button>
         </div>
 
-        <Modal isOpen={this.state.modalOpen} shouldCloseOnOverlayClick={false}>
+        <Modal isOpen={this.state.modalOpen} shouldCloseOnOverlayClick={false} className='modal-window'>
 
           <h1>Edit Recipe</h1>
           <label htmlFor='title'>Title:</label>
