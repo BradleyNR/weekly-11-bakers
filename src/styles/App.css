@@ -2,13 +2,22 @@
   text-align: center;
   border: 1px solid black;
   background-color: lightgrey;
+  padding: 20px;
 }
 
-
+.recipe-form-button-row {
+  margin-top: 10px;
+}
 
 .ingredient-to-add {
   border: 1px solid black;
   padding: 20px;
+  margin-top: 5px;
+}
+
+.ingredient-to-add-button {
+  padding: 20px;
+  margin-top: 5px;
 }
 
 
@@ -35,4 +44,17 @@
   margin-top: 5%;
   background-color: white;
   padding: 35px;
+}
+
+.recipe-header-area {
+  text-align: center;
+  background-color: darkgrey;
+  margin-bottom: 30px;
+  padding: 20px;
+}
+
+.recipe-header-area h1 {
+  color: #FFF;
+  font-size: 100px;
+  font-weight: bold;
 }

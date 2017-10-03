@@ -31,12 +31,20 @@ class RecipeListItem extends Component {
 
     this.state = {
       modalOpen: false,
-      recipe: this.props.recipe
+      recipe: this.props.recipe,
+      newTitle: '',
+      newServing: '',
+      newIngredients: []
     }
+  }
+
+  componentDidMount = () => {
+    this.setState({recipe: this.props.recipe})
   }
 
   handleEditOpen = (e) => {
     e.preventDefault();
+    console.log('LOGGING RECIPE: ', this.props.recipe.objectId);
     this.setState({modalOpen: true});
   }
 
@@ -47,6 +55,23 @@ class RecipeListItem extends Component {
 
   handleEditSubmit = (e) => {
     e.preventDefault();
+  }
+
+  handleNewTitle = (e) => {
+    e.preventDefault();
+    this.setState({newTitle: e.target.value});
+  }
+
+  handleNewFeeds = (e) => {
+    e.preventDefault();
+    this.setState({newServing: e.target.value});
+  }
+
+  // TODO: FINISH THIS, ASK DAN
+  handleNewIngredient = (e) => {
+    e.preventDefault();
+    let ingredientArray = this.state.newIngredients;
+
   }
 
   handleDelete = (e) => {
@@ -93,13 +118,13 @@ class RecipeListItem extends Component {
           <button onClick={this.handleDelete} className='col-md-12 btn btn-danger'>Delete</button>
         </div>
 
-        <Modal isOpen={this.state.modalOpen} shouldCloseOnOverlayClick={false} className='modal-window'>
+        <Modal isOpen={this.state.modalOpen} shouldCloseOnOverlayClick={false} className='modal-window' contentLabel="Update Modal">
 
           <h1>Edit Recipe</h1>
           <label htmlFor='title'>Title:</label>
-          <input value={this.props.recipe.title} id='title'></input>
+          <input onChange={this.handleNewTitle} value={this.props.recipe.title} id='title'></input>
           <label htmlFor='feeds'>Feeds:</label>
-          <input value={this.props.recipe.feeds} id='feeds'></input>
+          <input onChange={this.handleNewFeeds} value={this.props.recipe.feeds} id='feeds'></input>
           {ingredientEdits}
           <button onClick={this.handleEditSubmit} className='btn btn-success'>Submit</button>
           <button onClick={this.handleEditClose} className='btn btn-danger'>Cancel</button>
@@ -117,10 +142,14 @@ function Ingredients(props){
   )
 }
 
+
+
 // inputs for editing an ingredient
 function IngredientInputs(props){
   let ingredient = props.ingredient;
 
+  // TODO: SET VALUE = TO STATE, THEN TAKE STATE AND USE IT TO BUILD AN OBJECT AND EDIT THE DATABASE
+  // TODO: CANT USE ON CHANGE HERE, ASK DAN WHAT TO DO
   return (
     <div>
       <input name="qty" value={ingredient.ingredientAmount} />
