@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Modal from 'react-modal';
 
 import PARSE_URL, {HEADERS} from '../parse.js';
 
@@ -25,6 +26,24 @@ class RecipeDisplay extends Component {
 }
 
 class RecipeListItem extends Component {
+  constructor(props){
+    super(props);
+
+    this.state = {
+      modalOpen: false,
+      recipe: this.props.recipe
+    }
+  }
+
+  handleEditOpen = (e) => {
+    e.preventDefault();
+    this.setState({modalOpen: true});
+  }
+
+  handleEditClose = (e) => {
+    e.preventDefault();
+    this.setState({modalOpen: false})
+  }
 
   handleDelete = (e) => {
     e.preventDefault();
@@ -52,6 +71,10 @@ class RecipeListItem extends Component {
         return <Ingredients key={index} ingredient={ingredient} />
     });
 
+    let ingredientEdits = this.props.recipe.ingredients.map(function(ingredient, index){
+        return <IngredientInputs key={index} ingredient={ingredient} id={index} />
+    });
+
     return (
       <div className='col-md-8 col-md-offset-2 recipe-card'>
         <section className='recipe-info-box col-md-8'>
@@ -62,9 +85,18 @@ class RecipeListItem extends Component {
           </ul>
         </section>
         <div className='col-md-3 col-md-offset-1 recipe-change-box'>
-          <button onClick={this.handleEdit} className='col-md-12 btn btn-success'>Edit</button>
+          <button onClick={this.handleEditOpen} className='col-md-12 btn btn-success'>Edit</button>
           <button onClick={this.handleDelete} className='col-md-12 btn btn-danger'>Delete</button>
         </div>
+
+        <Modal isOpen={this.state.modalOpen} shouldCloseOnOverlayClick={false}>
+
+          <h1>Edit Recipe</h1>
+          {ingredientEdits}
+          <button onClick={this.handleEditClose}>Cancel</button>
+
+        </Modal>
+
       </div>
   )}
 }
@@ -73,6 +105,19 @@ function Ingredients(props){
   let ingredient = props.ingredient;
   return (
     <li>{ingredient.ingredientAmount} {ingredient.ingredientMeasure} {ingredient.ingredient}</li>
+  )
+}
+
+// inputs for editing an ingredient
+function IngredientInputs(props){
+  let ingredient = props.ingredient;
+
+  return (
+    <div>
+      <input name="qty" value={ingredient.ingredientAmount} />
+      <input name="unit" value={ingredient.ingredientMeasure} />
+      <input name="name" value={ingredient.ingredient} />
+    </div>
   )
 }
 
