@@ -31,6 +31,7 @@ class RecipeListItem extends Component {
 
     this.state = {
       modalOpen: false,
+      modalChangeAmountOpen: false,
       recipe: this.props.recipe,
       newTitle: '',
       newServing: '',
@@ -44,13 +45,22 @@ class RecipeListItem extends Component {
 
   handleEditOpen = (e) => {
     e.preventDefault();
-    console.log('LOGGING RECIPE: ', this.props.recipe.objectId);
     this.setState({modalOpen: true});
   }
 
   handleEditClose = (e) => {
     e.preventDefault();
     this.setState({modalOpen: false})
+  }
+
+  handleEditAmountOpen = (e) => {
+    e.preventDefault();
+    this.setState({modalChangeAmountOpen: true});
+  }
+
+  handleEditAmountClose = (e) => {
+    e.preventDefault();
+    this.setState({modalChangeAmountOpen: false})
   }
 
   handleEditSubmit = (e) => {
@@ -114,6 +124,7 @@ class RecipeListItem extends Component {
           </ul>
         </section>
         <div className='col-md-3 col-md-offset-1 recipe-change-box'>
+          <button onClick={this.handleEditAmountOpen} className='col-md-12 btn btn-primary'>View</button>
           <button onClick={this.handleEditOpen} className='col-md-12 btn btn-success'>Edit</button>
           <button onClick={this.handleDelete} className='col-md-12 btn btn-danger'>Delete</button>
         </div>
@@ -128,6 +139,17 @@ class RecipeListItem extends Component {
           {ingredientEdits}
           <button onClick={this.handleEditSubmit} className='btn btn-success'>Submit</button>
           <button onClick={this.handleEditClose} className='btn btn-danger'>Cancel</button>
+
+        </Modal>
+
+        <Modal isOpen={this.state.modalChangeAmountOpen} shouldCloseOnOverlayClick={false} className='modal-window' contentLabel="Change Amount Modal">
+
+          <h1>Calculate!</h1>
+          <h2>Title: {this.props.recipe.title}</h2>
+          <h2>Feeds: {this.props.recipe.feeds}</h2>
+          {ingredientEdits}
+          <button className='btn btn-success'>Submit</button>
+          <button onClick={this.handleEditAmountClose} className='btn btn-danger'>Cancel</button>
 
         </Modal>
 

@@ -22,7 +22,7 @@ class Main extends Component {
 
   // get data from database and set state
   // data is passed down to RecipeDisplay for display purpose
-  componentDidMount(){
+  componentWillMount(){
     let username = this.state.user.username;
     // Building pointer per user to pull specific posts on logged in user
     let pointer = {
