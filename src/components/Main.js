@@ -23,23 +23,23 @@ class Main extends Component {
   // get data from database and set state
   // data is passed down to RecipeDisplay for display purpose
   componentWillMount(){
-    let username = this.state.user.username;
-    // Building pointer per user to pull specific posts on logged in user
-    let pointer = {
-      "__type":"Pointer",
-      "className":"_User",
-      "objectId": this.state.user.objectId
-    };
+      // Building pointer per user to pull specific posts on logged in user
+      let pointer = {
+        "__type":"Pointer",
+        "className":"_User",
+        "objectId": this.state.user.objectId
+      };
 
-    // fetching user's posts
-    fetch(PARSE_URL + '/classes/recipe/?where={"user":' + JSON.stringify(pointer) + '}', {
-      headers: HEADERS
-    }).then((response) => {
-      return response.json();
-    }).then((data) => {
-      console.log('data from server: ', data.results);
-      this.setState({recipeList: data.results})
-    })
+      // fetching user's posts
+      fetch(PARSE_URL + '/classes/recipe/?where={"user":' + JSON.stringify(pointer) + '}', {
+        headers: HEADERS
+      }).then((response) => {
+        return response.json();
+      }).then((data) => {
+        console.log('data from server: ', data.results);
+        this.setState({recipeList: data.results})
+      })
+
   }
 
   // send to database

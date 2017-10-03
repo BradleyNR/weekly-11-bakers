@@ -113,7 +113,6 @@ class LoginForm extends Component {
         <div className='recipe-header-area row'>
           <h1>CalcuBaker</h1>
         </div>
-
             <div className='col-md-5 col-md-offset-1'>
               <h1>Please Login:</h1>
               <form onSubmit={this.handleSubmit}>
@@ -144,6 +143,8 @@ class LoginForm extends Component {
               </form>
 
             </div>
+
+            {this.state.errorMessage ? <h1 className='col-md-6 col-md-offset-1'>{this.state.errorMessage}</h1> : null}
 
         </div>
     )

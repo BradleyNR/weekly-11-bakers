@@ -31,21 +31,23 @@ class RecipeListItem extends Component {
   constructor(props){
     super(props);
 
+
     this.state = {
       modalOpen: false,
       modalChangeAmountOpen: false,
-      recipe: this.props.recipe,
-      newTitle: '',
-      newServing: '',
-      newIngredients: [],
+      title: '',
+      serving: '',
+      newIngredients: '',
       feedsAmount: 0,
       originalFeeds: 0,
-      ratio: 1
+      ratio: 1,
+      recipe: props.recipe
     }
   }
 
   componentDidMount = () => {
-    this.setState({recipe: this.props.recipe})
+    this.setState({recipe: this.props.recipe, title: this.props.recipe.title, serving: this.props.recipe.feeds})
+    console.log(this.state.recipe, this.state.title, this.state.serving);
   }
 
   handleEditOpen = (e) => {
@@ -70,22 +72,40 @@ class RecipeListItem extends Component {
 
   handleEditSubmit = (e) => {
     e.preventDefault();
+    console.log(this.state.recipe);
+    let recipe = this.state.recipe
+    let objId = this.state.recipe.objectId;
+
+    fetch(PARSE_URL + '/classes/recipe/' + objId, {
+        headers: HEADERS,
+        body: JSON.stringify({
+          title: recipe.title,
+          feeds: parseInt(recipe.feeds),
+          ingredients: recipe.ingredients,
+          }),
+          method: 'PUT'
+      }).then((resp) => {
+        return resp.json();
+      }).then((message) => {
+        let recipeList = this.props.recipeList;
+        recipeList[this.props.index] = recipe;
+        this.props.updateMainState(recipeList);
+        this.setState({modalOpen: false})
+      });
   }
 
   handleNewTitle = (e) => {
     e.preventDefault();
-    this.setState({newTitle: e.target.value});
+    let recipe = this.state.recipe;
+    recipe.title = e.target.value;
+    this.setState({recipe: recipe});
   }
 
   handleNewFeeds = (e) => {
     e.preventDefault();
-    this.setState({newServing: e.target.value});
-  }
-
-  // TODO: FINISH THIS, ASK DAN
-  handleNewIngredient = (e) => {
-    e.preventDefault();
-    let ingredientArray = this.state.newIngredients;
+    let recipe = this.state.recipe;
+    recipe.feeds = e.target.value;
+    this.setState({recipe: recipe});
   }
 
   handleEditFeeds = (e) => {
@@ -96,6 +116,25 @@ class RecipeListItem extends Component {
     this.setState({feedsAmount: e.target.value, ratio: ratio});
     console.log(this.state.feedsAmount, this.state.originalFeeds, 'RATIO:', this.state.ratio);
   }
+
+  onChangeAmount = (ingredient, index, e) => {
+    let recipe = this.state.recipe;
+    recipe.ingredients[index].ingredientAmount = e.target.value;
+    this.setState({recipe: recipe});
+  }
+
+  onChangeMeasure = (ingredient, index, e) => {
+    let recipe = this.state.recipe;
+    recipe.ingredients[index].ingredientMeasure = e.target.value;
+    this.setState({recipe: recipe});
+  }
+
+  onChangeName = (ingredient, index, e) => {
+    let recipe = this.state.recipe;
+    recipe.ingredients[index].ingredient = e.target.value;
+    this.setState({recipe: recipe});
+  }
+
 
   handleDelete = (e) => {
     e.preventDefault();
@@ -119,29 +158,29 @@ class RecipeListItem extends Component {
   }
 
   render(){
-    let ingredientComponents = this.props.recipe.ingredients.map(function(ingredient, index){
+    let ingredientComponents = this.state.recipe.ingredients.map(function(ingredient, index){
         return <Ingredients key={index} ingredient={ingredient} />
     });
 
-    let ingredientEdits = this.props.recipe.ingredients.map(function(ingredient, index){
-        return <IngredientInputs key={index} ingredient={ingredient} id={index} />
+    let ingredientEdits = this.state.recipe.ingredients.map((ingredient, index) => {
+        return <IngredientInputs key={index} ingredient={ingredient} id={index} onChangeAmount={this.onChangeAmount} onChangeMeasure={this.onChangeMeasure} onChangeName={this.onChangeName}/>
     });
 
-    let ingredientEditAmount = this.props.recipe.ingredients.map((ingredient, index) => {
+    let ingredientEditAmount = this.state.recipe.ingredients.map((ingredient, index) => {
         return <IngredientAmountChange key={index} ingredient={ingredient} id={index} ratio={this.state.ratio}/>
     });
 
     return (
       <div className='col-md-8 col-md-offset-2 recipe-card'>
         <section className='recipe-info-box col-md-8'>
-          <h1>{this.props.recipe.title}</h1>
-          <h4>Feeds: {this.props.recipe.feeds}</h4>
+          <h1>{this.state.recipe.title}</h1>
+          <h4>Feeds: {this.state.recipe.feeds}</h4>
           <ul>
             {ingredientComponents}
           </ul>
         </section>
         <div className='col-md-3 col-md-offset-1 recipe-change-box'>
-          <button onClick={this.handleEditAmountOpen} className='col-md-12 btn btn-primary'>View</button>
+          <button onClick={this.handleEditAmountOpen} className='col-md-12 btn btn-primary'>Recalculate</button>
           <button onClick={this.handleEditOpen} className='col-md-12 btn btn-success'>Edit</button>
           <button onClick={this.handleDelete} className='col-md-12 btn btn-danger'>Delete</button>
         </div>
@@ -150,9 +189,9 @@ class RecipeListItem extends Component {
 
           <h1>Edit Recipe</h1>
           <label htmlFor='title'>Title:</label>
-          <input onChange={this.handleNewTitle} value={this.props.recipe.title} id='title'></input>
+          <input onChange={this.handleNewTitle} value={this.state.recipe.title} id='title'></input>
           <label htmlFor='feeds'>Feeds:</label>
-          <input onChange={this.handleNewFeeds} value={this.props.recipe.feeds} id='feeds'></input>
+          <input onChange={this.handleNewFeeds} value={this.state.recipe.feeds} id='feeds'></input>
           {ingredientEdits}
           <button onClick={this.handleEditSubmit} className='btn btn-success'>Submit</button>
           <button onClick={this.handleEditClose} className='btn btn-danger'>Cancel</button>
@@ -162,7 +201,7 @@ class RecipeListItem extends Component {
         <Modal isOpen={this.state.modalChangeAmountOpen} shouldCloseOnOverlayClick={false} className='modal-window' contentLabel="Change Amount Modal">
 
           <h1>Calculate!</h1>
-          <h2>Recipe: {this.props.recipe.title}</h2>
+          <h2>Recipe: {this.state.recipe.title}</h2>
           <label htmlFor='feedsEdit'>Edit The Portion:</label>
           <input onChange={this.handleEditFeeds} className='' type="number" id='feedsEdit' min="1" value={this.state.feedsAmount} />
           {ingredientEditAmount}
@@ -174,7 +213,6 @@ class RecipeListItem extends Component {
   )}
 }
 
-// TODO: NEW DEIVIDED BY OLD SET TO STATE USE AS RATIO
 
 function Ingredients(props){
   let ingredient = props.ingredient;
@@ -183,21 +221,23 @@ function Ingredients(props){
   )
 }
 
-
-
 // inputs for editing an ingredient
-function IngredientInputs(props){
-  let ingredient = props.ingredient;
+class IngredientInputs extends Component{
 
-  // TODO: SET VALUE = TO STATE, THEN TAKE STATE AND USE IT TO BUILD AN OBJECT AND EDIT THE DATABASE
-  // TODO: CANT USE ON CHANGE HERE, ASK DAN WHAT TO DO
-  return (
-    <div>
-      <input name="qty" value={ingredient.ingredientAmount} />
-      <input name="unit" value={ingredient.ingredientMeasure} />
-      <input name="name" value={ingredient.ingredient} />
-    </div>
-  )
+  render(){
+    let ingredient = this.props.ingredient;
+    let index = this.props.id;
+
+    // TODO: SET VALUE = TO STATE, THEN TAKE STATE AND USE IT TO BUILD AN OBJECT AND EDIT THE DATABASE
+    // TODO: CANT USE ON CHANGE HERE, ASK DAN WHAT TO DO
+    return (
+      <div>
+        <input onChange={this.props.onChangeAmount.bind(this, ingredient, index)} name="qty" value={ingredient.ingredientAmount} />
+        <input onChange={this.props.onChangeMeasure.bind(this, ingredient, index)} name="unit" value={ingredient.ingredientMeasure} />
+        <input onChange={this.props.onChangeName.bind(this, ingredient, index)} name="name" value={ingredient.ingredient} />
+      </div>
+    )
+  }
 }
 
 function IngredientAmountChange(props){
