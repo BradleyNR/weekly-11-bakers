@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import '../styles/App.css';
 
-import Main from './Main.js';
+import BaseLayout from '../layouts/Base.js';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <Main />
+        <BaseLayout />
       </div>
     );
   }
