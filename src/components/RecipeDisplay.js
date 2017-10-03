@@ -45,6 +45,10 @@ class RecipeListItem extends Component {
     this.setState({modalOpen: false})
   }
 
+  handleEditSubmit = (e) => {
+    e.preventDefault();
+  }
+
   handleDelete = (e) => {
     e.preventDefault();
 
@@ -92,8 +96,13 @@ class RecipeListItem extends Component {
         <Modal isOpen={this.state.modalOpen} shouldCloseOnOverlayClick={false}>
 
           <h1>Edit Recipe</h1>
+          <label htmlFor='title'>Title:</label>
+          <input value={this.props.recipe.title} id='title'></input>
+          <label htmlFor='feeds'>Feeds:</label>
+          <input value={this.props.recipe.feeds} id='feeds'></input>
           {ingredientEdits}
-          <button onClick={this.handleEditClose}>Cancel</button>
+          <button onClick={this.handleEditSubmit} className='btn btn-success'>Submit</button>
+          <button onClick={this.handleEditClose} className='btn btn-danger'>Cancel</button>
 
         </Modal>
 
