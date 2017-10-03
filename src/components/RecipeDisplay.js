@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import Modal from 'react-modal';
+import Fraction from 'fraction.js';
 
 import PARSE_URL, {HEADERS} from '../parse.js';
+
 
 class RecipeDisplay extends Component {
   constructor(props){
@@ -36,7 +38,7 @@ class RecipeListItem extends Component {
       newTitle: '',
       newServing: '',
       newIngredients: [],
-      feedsAmount: 10,
+      feedsAmount: 0,
       originalFeeds: 0,
       ratio: 1
     }
@@ -204,9 +206,12 @@ function IngredientAmountChange(props){
 
   let newIngredientAmount = ingredient.ingredientAmount * ratio;
 
+  let x = new Fraction(newIngredientAmount);
+  let res = x.toFraction(true);
+
   return (
     <div className='row ingredient-row'>
-      <p className='col-md-4'>{newIngredientAmount}</p>
+      <p className='col-md-4'>{res}</p>
       <p className='col-md-4'>{ingredient.ingredientMeasure}</p>
       <p className='col-md-4'>{ingredient.ingredient}</p>
     </div>
