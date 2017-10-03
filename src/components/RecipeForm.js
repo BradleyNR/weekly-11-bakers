@@ -125,10 +125,10 @@ class RecipeForm extends Component {
               <label htmlFor='recipe-title' className='col-md-2'>Recipe:</label>
               <input onChange={this.handleAddTitle} className='col-md-6' type="text" id='recipe-title' value={this.state.title}/>
               <label htmlFor='feeds' className='col-md-2'>Feeds:</label>
-              <input onChange={this.handleAddFeeds} className='col-md-2' type="number" id='feeds' min="1" max="16" value={this.state.feeds} />
+              <input onChange={this.handleAddFeeds} className='col-md-2' type="number" id='feeds' min="1" value={this.state.feeds} />
 
               <label htmlFor='add-item' className='col-md-2'>Ingredient:</label>
-              <input onChange={this.handleIngredientAmount} className='col-md-2' type="number" id='amount' min="1" max="16" value={this.state.ingredientAmount} />
+              <input onChange={this.handleIngredientAmount} className='col-md-2' type="number" id='amount' min="1" value={this.state.ingredientAmount} />
               <input onChange={this.handleIngredientMeasure} className='col-md-4' type='text' id='measure' placeholder='Measurement (eg. tbs, cups)' value={this.state.ingredientMeasure}/>
               <input onChange={this.handleIngredient} className='col-md-4' type='text' id='add-item' placeholder='Ingredient' value={this.state.ingredient}/>
 
