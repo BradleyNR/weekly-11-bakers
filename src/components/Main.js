@@ -13,9 +13,7 @@ class Main extends Component {
     let userJSON = JSON.parse(user);
 
     this.state = {
-      recipeList: [
-        {title: '', feeds: '', ingredients: []},
-      ],
+      recipeList: [],
       user: userJSON
     }
   }
