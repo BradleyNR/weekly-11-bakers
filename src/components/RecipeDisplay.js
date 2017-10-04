@@ -193,7 +193,7 @@ class RecipeListItem extends Component {
           <label htmlFor='title'>Title:</label>
           <input onChange={this.handleNewTitle} value={this.state.recipe.title} id='title'></input>
           <label htmlFor='feeds'>Feeds:</label>
-          <input onChange={this.handleNewFeeds} value={this.state.recipe.feeds} id='feeds' className='input-lg'></input>
+          <input onChange={this.handleNewFeeds} value={this.state.recipe.feeds} id='feeds' className=''></input>
           {ingredientEdits}
           <button onClick={this.handleEditSubmit} className='btn btn-success'>Submit</button>
           <button onClick={this.handleEditClose} className='btn btn-danger'>Cancel</button>
@@ -205,7 +205,7 @@ class RecipeListItem extends Component {
           <h1>Calculate!</h1>
           <h2>Recipe: {this.state.recipe.title}</h2>
           <label htmlFor='feedsEdit'>Edit The Portion:</label>
-          <input onChange={this.handleEditFeeds} className='' type="number" id='feedsEdit' min="1" value={this.state.feedsAmount} />
+          <input onChange={this.handleEditFeeds} className='input-lg' type="number" id='feedsEdit' min="1" value={this.state.feedsAmount} />
           {ingredientEditAmount}
           <button onClick={this.handleEditAmountClose} className='btn btn-danger'>Close</button>
 
