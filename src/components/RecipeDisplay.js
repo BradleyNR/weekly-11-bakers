@@ -173,7 +173,9 @@ class RecipeListItem extends Component {
     return (
       <div className='col-md-8 col-md-offset-2 recipe-card'>
         <section className='recipe-info-box col-md-8'>
-          <h1>{this.state.recipe.title}</h1>
+          <div className='recipe-info-title-section col-md-12'>
+            <h1>{this.state.recipe.title}</h1>
+          </div>
           <h4>Feeds: {this.state.recipe.feeds}</h4>
           <ul>
             {ingredientComponents}
@@ -191,7 +193,7 @@ class RecipeListItem extends Component {
           <label htmlFor='title'>Title:</label>
           <input onChange={this.handleNewTitle} value={this.state.recipe.title} id='title'></input>
           <label htmlFor='feeds'>Feeds:</label>
-          <input onChange={this.handleNewFeeds} value={this.state.recipe.feeds} id='feeds'></input>
+          <input onChange={this.handleNewFeeds} value={this.state.recipe.feeds} id='feeds' className='input-lg'></input>
           {ingredientEdits}
           <button onClick={this.handleEditSubmit} className='btn btn-success'>Submit</button>
           <button onClick={this.handleEditClose} className='btn btn-danger'>Cancel</button>
@@ -217,7 +219,7 @@ class RecipeListItem extends Component {
 function Ingredients(props){
   let ingredient = props.ingredient;
   return (
-    <li>{ingredient.ingredientAmount} {ingredient.ingredientMeasure} {ingredient.ingredient}</li>
+    <li class='ingredient-li'>{ingredient.ingredientAmount} {ingredient.ingredientMeasure} {ingredient.ingredient}</li>
   )
 }
 

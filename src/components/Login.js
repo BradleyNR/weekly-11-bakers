@@ -111,8 +111,9 @@ class LoginForm extends Component {
     return(
       <div className='row'>
         <div className='recipe-header-area row'>
-          <h1>CalcuBaker</h1>
+          <h1>Calcu-Baker</h1>
         </div>
+
             <div className='col-md-5 col-md-offset-1'>
               <h1>Please Login:</h1>
               <form onSubmit={this.handleSubmit}>

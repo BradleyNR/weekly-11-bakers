@@ -27,17 +27,22 @@
 }
 
 .recipe-info-box {
-  background-color: lightgrey;
+  background-color: #60ad5e;
   border-radius: 10px;
-  padding: 30px;
+  padding-bottom: 30px;
 }
 
 .recipe-change-box {
-  background-color: grey;
+  background-color: #005005;
   border-radius: 10px;
   padding: 30px;
 }
 
+.recipe-info-title-section {
+  border-bottom: 5px solid #005005;
+  margin-bottom: 20px;
+
+}
 .modal-window {
   width: 60%;
   margin: auto;
@@ -48,15 +53,21 @@
 
 .recipe-header-area {
   text-align: center;
-  background-color: darkgrey;
+  background-color: #2e7d32;
   margin-bottom: 30px;
   padding: 20px;
 }
 
 .recipe-header-area h1 {
   color: #FFF;
-  font-size: 100px;
+  font-size: 120px;
   font-weight: bold;
+  font-family: 'Lobster', cursive;
+  letter-spacing: 20px;
+}
+
+.ingredient-li {
+  font-size: 18px;
 }
 
 .ingredient-row {

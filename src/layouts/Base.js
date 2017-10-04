@@ -7,7 +7,7 @@ import Login from '../components/Login.js';
 function BaseLayout(props){
   return(
     <Router>
-        <main className='container'>
+        <main>
           <Route path='/' exact component={Login} />
           <Route path='/home' exact component={Main} />
         </main>
