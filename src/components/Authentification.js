@@ -19,7 +19,7 @@ function authRequired(ComposedComponent){
 
     componentWillMount(){
       console.log('Is Logged In: ', !this.isLoggedIn());
-      !this.isLoggedIn() ? this.props.history.push('/') : null;
+      !this.isLoggedIn() ? this.props.history.push('/weekly-11-bakers/') : null;
     }
 
     render(){

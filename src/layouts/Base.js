@@ -11,9 +11,9 @@ function BaseLayout(props){
     <Router>
       <Switch>
         <main>
-          <Route path='/' exact component={Login} />
-          <Route path='/home' exact component={authRequired(Main)} />
-          <Redirect to="/" />
+          <Route path='/weekly-11-bakers/' exact component={Login} />
+          <Route path='/weekly-11-bakers/home' exact component={authRequired(Main)} />
+          <Redirect to="/weekly-11-bakers/" />
         </main>
       </Switch>
     </Router>
