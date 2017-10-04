@@ -78,7 +78,7 @@ class LoginForm extends Component {
         // --- setting session token to header for new headers
         HEADERS['X-Parse-Session-Token'] = user.sessionToken;
         this.setState({user: user, username: '', password: '', signupUsername: '', signupPassword: ''});
-        this.props.history.push('/home');
+        this.props.history.push('/weekly-11-bakers/home');
       } else {
         this.setState({errorMessage: user.error})
       }
