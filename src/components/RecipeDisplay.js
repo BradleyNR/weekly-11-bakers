@@ -39,7 +39,7 @@ class RecipeListItem extends Component {
       serving: '',
       newIngredients: '',
       feedsAmount: 0,
-      originalFeeds: 0,
+      originalFeeds: props.recipe.feeds,
       ratio: 1,
       recipe: props.recipe
     }
@@ -62,7 +62,7 @@ class RecipeListItem extends Component {
 
   handleEditAmountOpen = (e) => {
     e.preventDefault();
-    this.setState({modalChangeAmountOpen: true, feedsAmount: this.props.recipe.feeds, originalFeeds: this.props.recipe.feeds});
+    this.setState({modalChangeAmountOpen: true, feedsAmount: this.props.recipe.feeds});
   }
 
   handleEditAmountClose = (e) => {
@@ -111,7 +111,7 @@ class RecipeListItem extends Component {
   handleEditFeeds = (e) => {
     e.preventDefault();
     let firstAmount = this.state.originalFeeds;
-    let newAmount = this.state.feedsAmount;
+    let newAmount = e.target.value;
     let ratio = (newAmount / firstAmount);
     this.setState({feedsAmount: e.target.value, ratio: ratio});
     console.log(this.state.feedsAmount, this.state.originalFeeds, 'RATIO:', this.state.ratio);
